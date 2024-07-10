@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PresensiController;
 
-Route::middleware(['guest:karyawan'])->group(function () {
+Route::middleware(['guest:karyawan'])->group(function () {  
     Route::get('/', function () {
         return view('auth.login');
     })->name('login');
