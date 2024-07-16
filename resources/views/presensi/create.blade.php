@@ -89,11 +89,11 @@
             }).addTo(map);
 
             L.marker([latitude, longitude]).addTo(map);
-            L.circle([latitude, longitude], {
+            L.circle([-7.929872548857881, 112.64928946236074], {
                 color: 'red',
                 fillColor: '#f03',
                 fillOpacity: 0.5,
-                radius: 20
+                radius: 45
             }).addTo(map);
         }
 
@@ -116,7 +116,7 @@
                     },
                     cache: false,
                     success: function (respond) {
-                        if (respond == 0) {
+                        if (respond.status === 0) {
                             Swal.fire({
                                 title: 'Berhasil!',
                                 text: 'Absen Datang Anda Berhasil',
@@ -126,14 +126,14 @@
                             }).then(() => {
                                 location.href = '/dashboard';
                             });
-                        } else if (respond == 1) {
+                        } else if (respond.status === 1) {
                             Swal.fire({
                                 title: 'Gagal!',
                                 text: 'Absen Datang Anda Gagal',
                                 icon: 'error',
                                 confirmButtonText: 'OK'
                             });
-                        } else if (respond == 2) {
+                        } else if (respond.status === 2) {
                             Swal.fire({
                                 title: 'Berhasil!',
                                 text: 'Absen Pulang Anda Berhasil',
@@ -143,10 +143,17 @@
                             }).then(() => {
                                 location.href = '/dashboard';
                             });
-                        } else if (respond == 3) {
+                        } else if (respond.status === 3) {
                             Swal.fire({
                                 title: 'Gagal!',
                                 text: 'Absen Pulang Anda Gagal',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        } else if (respond.status === 4) {
+                            Swal.fire({
+                                title: 'Gagal!',
+                                text: `Absen Pulang Gagal, Anda di Luar Pengadilan Negeri Kota Malang Dengan Jarak ${respond.radius} meter`,
                                 icon: 'error',
                                 confirmButtonText: 'OK'
                             });
