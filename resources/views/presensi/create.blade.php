@@ -148,7 +148,7 @@
                                 title: 'Gagal!',
                                 text: 'Absen Pulang Anda Gagal',
                                 icon: 'error',
-                                confirmButtonText: 'OK'
+                                confirmButtonText: 'OK' 
                             });
                         } else if (respond.status === 4) {
                             Swal.fire({

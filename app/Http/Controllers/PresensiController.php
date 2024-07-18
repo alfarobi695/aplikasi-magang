@@ -30,17 +30,24 @@ class PresensiController extends Controller
         $longitudeuser = $lokasiuser[1];
         $jarak = $this->distance($latitudekantor, $longitudekantor, $latitudeuser, $longitudeuser);
         $radius = round($jarak["meters"]);
+
+        $cek = DB::table('presensi')->where('tgl_presensi', $tgl_presensi)->where('nik', $nik)->count();
+        
+        if($cek>0){
+            $ket = "out";
+        } else {
+            $ket = "in";
+        }
     
         $image = $request->image;
         $folderPath = "public/uploads/absensi/";
-        $formatName = $nik . "-" . $tgl_presensi;
+        $formatName = $nik . "-" . $tgl_presensi . "-" . $ket;
         $image_parts = explode(";base64,", $image);
         $image_base64 = base64_decode($image_parts[1]);
         $fileName = $formatName . ".png";
         $file = $folderPath . $fileName;
     
-        $cek = DB::table('presensi')->where('tgl_presensi', $tgl_presensi)->where('nik', $nik)->count();
-        if ($radius > 1) {
+        if ($radius > 45) {
             return response()->json(['status' => 4, 'radius' => $radius]);
         } else {
             if ($cek > 0) {
