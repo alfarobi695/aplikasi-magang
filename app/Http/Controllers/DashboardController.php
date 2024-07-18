@@ -16,10 +16,21 @@ class DashboardController extends Controller
         $nik = Auth::guard('karyawan')->user()->nik;
         $presensiharini = DB::table('presensi')->where('nik',$nik)->where('tgl_presensi',$hariini)->first();
         $historibulanini = DB::table('presensi')
+        ->where('nik',$nik)
         ->whereRaw('MONTH(tgl_presensi) = ?', [$bulanini])
         ->whereRaw('YEAR(tgl_presensi) = ?', [$tahunini])
         ->orderBy('tgl_presensi')
         ->get();
-        return view('dashboard.dashboard', compact('presensiharini','historibulanini'));
+
+        $rekappresensi = DB::table('presensi')->selectRaw('COUNT(nik) as jmlhadir, COUNT(IF(jam_in>"08:00",1,0)) as jmlterlambat')->where('nik',$nik) ->whereRaw('MONTH(tgl_presensi) = ?', [$bulanini])
+        ->whereRaw('YEAR(tgl_presensi) = ?', [$tahunini])->first();
+
+        $leaderboard = DB::table('presensi')
+        ->join('karyawan','presensi.nik','=','karyawan.nik')
+        ->where('tgl_presensi',$hariini)
+        ->orderBy('jam_in')
+        ->get();
+
+        return view('dashboard.dashboard', compact('presensiharini','historibulanini','rekappresensi','leaderboard'));
     }
 }

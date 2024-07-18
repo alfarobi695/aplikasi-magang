@@ -6,7 +6,7 @@
             <img src="assets/img/sample/avatar/avatar1.jpg" alt="avatar" class="imaged w64 rounded">
         </div>
         <div id="user-info">
-            <h2 id="user-name">Adam Abdi Al A'la</h2>
+            <h2 id="user-name">{{ Auth::guard('karyawan')->user()->nama_lengkap }}</h2>
             <span id="user-role">Head of IT</span>
         </div>
     </div>
@@ -122,7 +122,7 @@
                             </div>
                             <div class="presencedetail">
                                 <h4 class="rekappresencetitle">Hadir</h4>
-                                <span class="rekappresencedetail">0 Hari</span>
+                                <span class="rekappresencedetail">{{ $rekappresensi->jmlhadir }} Hari</span>
                             </div>
                         </div>
                     </div>
@@ -169,7 +169,7 @@
                             </div>
                             <div class="presencedetail">
                                 <h4 class="rekappresencetitle">Telat</h4>
-                                <span class="rekappresencedetail">0 Hari</span>
+                                <span class="rekappresencedetail">{{ $rekappresensi->jmlterlambat }} Hari</span>
                             </div>
                         </div>
                     </div>
@@ -225,48 +225,21 @@
             </div>
             <div class="tab-pane fade" id="profile" role="tabpanel">
                 <ul class="listview image-listview">
+                    @foreach ($leaderboard as $listleaderboard )
                     <li>
                         <div class="item">
                             <img src="assets/img/sample/avatar/avatar1.jpg" alt="image" class="image">
                             <div class="in">
-                                <div>Edward Lindgren</div>
-                                <span class="text-muted">Designer</span>
+                                <div>
+                                    <b>{{ $listleaderboard->nama_lengkap }}</b><br>
+                                    <small class="text-muted">{{ $listleaderboard->jabatan }}</small>
+                                </div>
+                                <span class="badge {{ $listleaderboard->jam_in < '08:00' ? 'bg-success' : 'bg-danger' }}">{{ $listleaderboard->jam_in }}</span>
                             </div>
                         </div>
                     </li>
-                    <li>
-                        <div class="item">
-                            <img src="assets/img/sample/avatar/avatar1.jpg" alt="image" class="image">
-                            <div class="in">
-                                <div>Emelda Scandroot</div>
-                                <span class="badge badge-primary">3</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="item">
-                            <img src="assets/img/sample/avatar/avatar1.jpg" alt="image" class="image">
-                            <div class="in">
-                                <div>Henry Bove</div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="item">
-                            <img src="assets/img/sample/avatar/avatar1.jpg" alt="image" class="image">
-                            <div class="in">
-                                <div>Henry Bove</div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="item">
-                            <img src="assets/img/sample/avatar/avatar1.jpg" alt="image" class="image">
-                            <div class="in">
-                                <div>Henry Bove</div>
-                            </div>
-                        </div>
-                    </li>
+
+                    @endforeach
                 </ul>
             </div>
 
