@@ -18,6 +18,11 @@ Route::middleware(['auth:karyawan'])->group(function () {
     Route::get('/proseslogout', [AuthController::class, 'proseslogout']);
 
     //presensi
-    Route::get('presensi/create', [PresensiController::class, 'create']);
-    Route::post('presensi/store',[PresensiController::class, 'store']);
+    Route::get('/presensi/create', [PresensiController::class, 'create']);
+    Route::post('/presensi/store',[PresensiController::class, 'store']);
+
+    //edit profile
+    Route::get('/presensi/editprofile', [PresensiController::class, 'editprofile']);
+    Route::post('/presensi/{nik}/updateprofile', [PresensiController::class, 'updateprofile']);
+
 });
